@@ -10,6 +10,7 @@
 -module(lab5).
 -export([fourthPower/1, square/1, fourthPower2/1, median3/1, cycleOnce/1, factorial/1, getNth/2, logarithm/2, largest/1, contains/2]).
 
+%% 1a %%
 % Method to compute x^4 %
 fourthPower(N) -> 
 	N * N * N * N.
@@ -18,6 +19,7 @@ fourthPower(N) ->
 square(N) ->
 	N * N.
 
+%% 1b %%
 % Alternative method to compute x^4 %
 fourthPower2(N) -> 
 	square(N) * square(N).
@@ -48,6 +50,7 @@ min3(A, B, C) ->
 				end
 	end.
 
+%% 1c %%
 % Method to find the median of three numbers %
 median3(TUPLE) -> 
 	FIRST = element(1, TUPLE),
@@ -59,6 +62,7 @@ median3(TUPLE) ->
 	% Return MEDIAN %
 	MEDIAN.
 
+%% 2a %%
 % Method to find the factorial of an input (N) %
 % We can overload to accomodate a 0! or 1! case %
 factorial(0) -> 1;
@@ -70,6 +74,7 @@ factorial(N) ->
 cycleOnce(L) ->
 	tl(L) ++ [hd(L) | []].
 
+%% 2b %%
 % Method to return the nth item of a list using above method, cycleOnce() */
 getNth(INPUT, N) -> 
 	% Iterates through the list and returns the list %
@@ -77,18 +82,19 @@ getNth(INPUT, N) ->
 	%RES = lists:nth(N, LIST), 
 	%RES.
 
-	A = hd(INPUT),
+	HEAD = hd(INPUT),
 	B = 1,
 
 	if
 		B == N ->
-			A;
+			HEAD;
 		B < N ->
 			getNth(cycleOnce(INPUT), N-1);
 		true ->
 		    false
     	end.
 
+%% 2c %% 
 % Logarithm Function %
 logarithm(X, Y) -> 
 	case X == Y of
@@ -96,19 +102,36 @@ logarithm(X, Y) ->
 		false -> 1 + logarithm(X, Y/X)
 	end.
 
-	% if
-	% 	X == A ->
-	% 		A;
-	% 	true ->
-	% 		1 + logarithm(X/Y, Y)
-	% end.
 
+%% 2d %%
 % Method to return the largest element in a list %
 largest(INPUT) -> 
-	N * N * N * N.
+	TAIL = tl(INPUT),
 
+	if
+		% If the tail is empty, return the head %
+		TAIL == [] ->
+			hd(INPUT);
+		hd(INPUT) > hd(TAIL) ->
+			largest([hd(INPUT)] ++ tl(tl(INPUT)));
+		true ->
+			largest(tl(INPUT))
+	end. 
+
+
+%% 2e %%
+% Method to determine if a list returns an item (return a boolean) %
 contains(DATA, LIST) -> 
-	DATA * LIST * DATA * LIST.
+	if
+		DATA == hd(LIST) ->
+			true;
+		LIST == [] ->
+			false;
+		tl(LIST) == [] ->
+			false;
+		true ->
+			contains(DATA, tl(LIST))
+	end.
 
 
 
