@@ -8,7 +8,9 @@ Description: Introduction to Erlang lab.
 Part 1a:
 =======
 
-`fourthPower(N)`
+```Erlang
+	fourthPower(N)`
+```
 
 This method takes an input `N` and simply returns N to the fourth power. It does so by multiplying N by itself 4 times.
 
