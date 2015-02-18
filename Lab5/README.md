@@ -1,8 +1,10 @@
-# Lab 5 
+# Lab 5
 
-Author: Grant McGovern 
-Date: 17 Feb 2015 
-Description: Introduction to Erlang lab.
+<b>Author:</b> Grant McGovern 
+
+<b>Date:</b> 17 Feb 2015 
+
+<b>Description:</b> Introduction to Erlang lab.
 
 
 Note: Wrote in an .md (markdown file to comply with Github README standards)
