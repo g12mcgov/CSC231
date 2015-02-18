@@ -83,12 +83,11 @@ getNth(INPUT, N) ->
 	%RES.
 
 	HEAD = hd(INPUT),
-	B = 1,
 
 	if
-		B == N ->
+		1 == N ->
 			HEAD;
-		B < N ->
+		1 < N ->
 			getNth(cycleOnce(INPUT), N-1);
 		true ->
 		    false
