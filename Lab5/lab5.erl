@@ -122,10 +122,10 @@ largest(INPUT) ->
 % Method to determine if a list returns an item (return a boolean) %
 contains(DATA, LIST) -> 
 	if
-		DATA == hd(LIST) ->
-			true;
 		LIST == [] ->
 			false;
+		DATA == hd(LIST) ->
+			true;
 		tl(LIST) == [] ->
 			false;
 		true ->
