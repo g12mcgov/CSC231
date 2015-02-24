@@ -20,7 +20,7 @@ Part 1a:
 	productOfPairs(LIST)
 ```
 
-This method takes an input list 'LIST' and computes the product of pairs by multiplying the head of the list by the second element (otherwise known as the 2nd element). This method checks for multiple conditions:
+This method takes an input list 'LIST' and computes the product of pairs by multiplying the head of the list by the second element (otherwise known as the head of the tail. This method checks for multiple conditions:
 	
 	1. Empty List -> returns an empty list.
 	2. Single Element List -> returns single element.
@@ -87,7 +87,7 @@ This method takes two input lists `LIST` x2. It follows [Horners Rule for Polyno
 
 <b>Tests:</b>
 
-Tested using a special input where the first input is a list and the second input is 0. For example: `polyeval([2, -3, -4], 0). In this case, the method returned 2, which makes sense because the 2 is the constant in the polynomial. Also tested with the empty set, and any input `X` which yields `0`.
+Tested using a special input where the first input is a list and the second input is 0. For example: `polyeval([2, -3, -4], 0)`. In this case, the method returned 2, which makes sense because the 2 is the constant in the polynomial. Also tested with the empty set, and any input `X` which yields `0`.
 
 
 <b>Additional Tests:</b>
