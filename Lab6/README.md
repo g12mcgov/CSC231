@@ -20,7 +20,7 @@ Part 1a:
 	productOfPairs(LIST)
 ```
 
-This method takes an input list 'LIST' and computes the product of pairs by multiplying the head of the list by the second element (otherwise known as the head of the tail. This method checks for multiple conditions:
+This method takes an input list 'LIST' and computes the product of pairs by multiplying the head of the list by the second element (otherwise known as the head of the tail). This method checks for multiple conditions:
 	
 	1. Empty List -> returns an empty list.
 	2. Single Element List -> returns single element.
