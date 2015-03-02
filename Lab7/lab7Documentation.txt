@@ -1,0 +1,64 @@
+Gaurav Sheni
+Lab 7 Documentation
+2/28/15
+CSC 231
+
+extractEvens(L):
+    This function uses the isEven function to see if a number is even. It is uses filter since we want to keep items in the list. We do not need to use the items in the list with each other and thus do not use reduce.
+
+isEven(X):
+    This function find the remainder of a number when divided by two. If the remainder is 1, then it will return a false, since it is not even. If the remainder is 0, then it will return a true, since it is even. This is correct since to find if a number is even, you divide by two.
+
+extractAWords(L):
+    We need to keep the words that start with a or A. Since we are keeping items in the list again, we use the filter function. It applies the acheck function to the list.
+
+acheck(L):
+    This gets the first letter of the string by uses the head function of a list. This is then compared with "a" or "A". If it matches either of these, then it returns a true. Otherwise it returns a false. This is correct because it checks the first character and uses the $ to check.
+
+logicalOR(L):
+    A logicalOR is true if one item in the list is true. If more than item is true, the logicalOR is true still. If all items in the list are false, then the logicalOR is false.
+    This function uses the filter function to apply a list to removefalse. It is basically seeing if the current item is a false. By remove all of the falses from the list, we are left with at least one true or the empty list. The empty list means that all items in the list were removed and thus false should be returned. Otherwise, it means that the list has one item at least, and that one item is a true. Thus true is returned.
+    This matches a logicalOR because it is basically removing the falses from a list. The presence of any one true will mean the logicalOR will be true, otherwise an empty list will mean all false which means false.
+
+removefalse(L):
+    This just checks if the current list is true. This works because they will be boolean values. Its a simple function that just looks at the element and compares it to a boolean value.
+
+longStrings(L):
+    This function uses the filter function to return items that are longer than 3. This needs to use filter because two items in the list do not interact with each other in the list.
+
+longcheck(L):
+    This checks if the list is 3 or less. If it is, then return false, effectively removing it from the list. If it is not, then return true, and keep it in the list. It works because it uses the length function to check for the length.
+    
+strcat(L):
+    This is supposed to put a list together into into string. This means we need to use the reduce function since the items in the list are interacting with each other. We need to reduce the items to one item to be returned.
+
+puttogether(X,Y):
+    This simple uses the ++ to add the two items in the string together.
+
+max(L):
+    This is supposed to find the max item in a list. We return one item from a list with possibly many. Thus we need to use the reduce function and just keep the bigger items after we compare.
+
+findmax(X,Y):
+    This is checking which item is bigger and returning that item. If X is bigger it returns X. If Y is bigger it return Y. If they are the same, then return X OR Y (I returned X), it doesn't matter. It is effectively removing the smaller item from the list.
+
+findInTree(S, T):
+    This calls the locate function to find the correct value. It uses the # operator to pass the root node of the T binary tree. The # lets you access the field of that type. It needs to pass the node so that the function knows where to start.
+
+locate(_, null):
+    If the current node is null, then we just return a false, since there are no values to check below it or the check at the node itself.
+
+locate(S, T):
+    This is first check if the current node is the value we are looking for by using the == comparator. This also uses the #to access the current binary node field and the . to access the value.
+    If the value isn't found at the current root node, then search left of the root node, by recursively call the left item as the root.
+    If the value isn't found at the current root node, or left of the node, then search to the right of the node by recursively calling the right item of the root.
+    The reason this works is because it traversing the tree properly. It says if you don't find it either by the root node, or all the node to the left or all the node to the right, then it has to be false. If at any point along the way it finds a true, it will stop and return a true. If it did  not then it returns to the false.
+
+evaluate(L):
+    This uses the find function to find where in the binary tree it should carry out operations. It also uses the # to access the field of the L binary tree and the . to access the root node. It works because it passes the root node onto find function.
+
+find(L):
+    This finds out what the current operator is by using multiple if functions and comparing the node values. If it finds a match, it does that operation.
+    When it does the operation, it recursively calls itself on the children of the node. This will keep recursively calling until there is not a operator currently at which point it will return value using the stringToFloat function. This will be passed back up, and the operation will then be carried out on the function.
+
+
+
