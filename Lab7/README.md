@@ -22,8 +22,6 @@ Part 1a:
 
 This method takes an input list `LIST` and builds a new list only containing even numbers. It makes use of the `isEven` helper method which checks to see if a number is even by taking its remainder when divided 2. If it's 0, we know it's even, otherwise it's prime. It also makes use of the filter helper method because we want to keep certain elements in the list.
 
-Part 1b:
-=======
 
 ```Erlang
 	isEven(ITEM)
@@ -31,7 +29,7 @@ Part 1b:
 
 This method takes an input number `ITEM` and determines whether or not it's even. We can check for this by dividing the `ITEM` by 2 and seeing if it has a reminder equal to zero. If it does, we return true because it is in fact even, otherwise, we return false because it's odd.
 
-Part 1c:
+Part 1b:
 =======
 
 ```Erlang
@@ -47,7 +45,7 @@ This method takes an input list of strings `LIST` and returns a list with all of
 This method takes in a string `ITEM` and checks to see if the first character is either `a` or `A`. It finds the first element by using the `hd()` method. We use a case statement here so that if the first character is `a` or `A`, then we return true, otherwise, return false. To access individual characters we must use the `$` Erlang syntax such as `$a` for `a` and `$A` for `A`.
 
 
-Part 1d:
+Part 1c:
 =======
 
 ```Erlang
@@ -63,7 +61,7 @@ This method searches an input list `LIST` to see if any one in the list is `true
 This method takes an input `ITEM` and checks to see whether or it's true. If it's true, it returns true, otherwise it returns false.
 
 
-Part 1e:
+Part 1d:
 =======
 
 ```Erlang 
@@ -81,7 +79,7 @@ This method takes an input list `LIST` and uses the `filter` method to extract e
 This method takes an input list `LIST` and determines whether or not it's less than 3 characters long. If the condition evaluates to `true` (using the built-in `length()` method), then the method returns `true`, otherwise it returns `false`.
 
 
-Part 3b:
+Part 1e:
 =======
 
 ```Erlang
