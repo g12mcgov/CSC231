@@ -47,7 +47,7 @@ Like the above method, this takes inputs `X` and `Y` where we are trying to dete
 	grandfather(X, Y)
 ```
 
-This method takes inputs `X` and `Y` and determines if `X` is a grandfather to `Y`. It makes multiple calls to the father method `father(X, Z), father(Z, Y)` to first check if the child `Z` of the first father and if `Z` is also a father the child `Y`. If we have satisfied both of these conditions, then we know that `X` has to be a grandfather.
+This method takes inputs `X` and `Y` and determines if `X` is a grandfather to `Y`. It makes multiple calls to the father method `father(X, Z), father(Z, Y)` to first check if the child `Z` of the first father is also a father the child `Y`. We also check if the first father is a father to the mother of child `Z`. If we have satisfied both of these conditions, then we know that `X` has to be a grandfather.
 
 ```Prolog
 	aunt(X, Y)
