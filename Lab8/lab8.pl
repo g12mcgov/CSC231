@@ -1,8 +1,8 @@
 /*
-* 
-* 
+*
+*
 * Author: Grant McGovern
-* Date: 23 March 2015  
+* Date: 23 March 2015
 *
 * ~ Introduction to Prolog: Lab 8 ~
 *
@@ -19,6 +19,8 @@ male(william).
 male(matt).
 male(andrew).
 male(ryan).
+male(gene).
+male(ed).
 
 /* Facts about who's female */
 female(nancy).
@@ -27,8 +29,10 @@ female(meghan).
 female(sue).
 female(samantha).
 female(morgan).
+female(evelyn).
+female(shirley).
 
-/* Facts describing parent, child relationships */ 
+/* Facts describing parent, child relationships */
 parent(robert,grant).
 parent(robert,meghan).
 parent(nancy,grant).
@@ -40,6 +44,18 @@ parent(stuart, morgan).
 parent(denise, matt).
 parent(sue, samantha).
 parent(sue, ryan).
+parent(shirley, rob).
+parent(shirley, sue).
+parent(shirley, denise).
+parent(ed, rob).
+parent(ed, denise).
+parent(ed, sue).
+parent(gene, nancy).
+parent(gene, gordon).
+parent(gene, stuart).
+parent(evelyn, nancy).
+parent(evelyn, gordon).
+parent(evelyn, stuart).
 
 /* A definition for siblings - share the same parent */
 siblings(X,Y) :- parent(Z,X), parent(Z,Y), X \= Y.
@@ -68,8 +84,10 @@ sister(X, Y) :- siblings(X, Y), female(X), X \= Y.
 /* Brother Relationship */
 brother(X, Y) :- siblings(X, Y), male(X), X \= Y.
 
-/* Grandfather Relationship */
+/* Grandfather Relationship */ /* Check for both father AND mother */
 grandfather(X, Y) :- father(X, Z), father(Z, Y).
+grandfather(X, Y) :- father(X, Z), mother(Z, Y).
+
 
 /* Aunt Relationship */
 aunt(X, Y) :- sister(X, Z), mother(Z, Y).
@@ -93,33 +111,39 @@ isnatural(X) :- X > 0, Y is X-1, isnatural(Y).
 
 /* Computes the factorial() method */
 factorial(0, 1).
-factorial(A, B) :- A > 0, C is A-1, factorial(C, D), B is A * D.
+factorial(X, Y) :- X > 0, Z is X-1, factorial(Z, W), Y is X * W.
 
 /* Computes the fibonacci series */
 fibonacci(0, 1).
 fibonacci(1, 1).
-fibonacci(A, B) :- A > 1, C is A-1, D is A-2, fibonacci(C, E), fibonacci(D, F), B is E + F.
+fibonacci(X, Y) :- X > 1, Z is X-1, W is X-2,
+fibonacci(Z, P),
+fibonacci(W, Q),
+Y is P + Q.
+
+/* ^^ Test as factorial(0,X). */
 
 
 /* Problem 3 Related */
 
-/* Where `X` is an inputted student */
-optional(X) :- taken(X, math, 121).
-optional(X) :- taken(X, math, 121).
-optional(X) :- taken(X, math, 121).
-
-math(X) :- taken(X, math, 111), taken(X, math, 112), optional(X).
-
-/* Core CS Requirements */
-cscore(X) :- taken(X, cs, 111), taken(X, cs, 112), taken(X, cs, 211), 
-			taken(X, cs, 221), taken(X, cs, 222), taken(X, cs, 231),
-			taken(X, cs, 241), taken(X, cs, 399).
-
-csupperlevel(X) :- taken(X, cs, A), taken(X, cs, B), taken(X, cs, C), taken(X, cs, D),
-				A > 299, B > 299, C > 299, D > 299, A \= 399, B \= 399, C \= 399, D \= 399.
-
 fulfilledCSMajor(X) :- math(X), cscore(X), csupperlevel(X).
 
+/* Test if math requirement has been satisfied */
+math(X) :- taken(X, math, 112), taken(X, math, 117), optional(X).
+
+/* Where `X` is an inputted student */
+optional(X) :- taken(X, math, 121).
+optional(X) :- taken(X, math, 205).
+optional(X) :- taken(X, math, 206).
+
+/* Core CS Requirements */
+cscore(X) :- taken(X, cs, 111), taken(X, cs, 112), taken(X, cs, 211),
+taken(X, cs, 221), taken(X, cs, 222), taken(X, cs, 231),
+taken(X, cs, 241), taken(X, cs, 399).
+
+csupperlevel(X) :- taken(X, cs, A), taken(X, cs, B), taken(X, cs, C), taken(X, cs, D),
+A > 299, B > 299, C > 299, D > 299, A \= 399, B \= 399, C \= 399, D \= 399,
+A \= B, A \= C, A \= D, B \= C, B \= D, C \= D.
 
 /* This student, studentA, has fulfilled the BS in CS major requirements */
 taken(studentA,cs,111).
@@ -136,9 +160,10 @@ taken(studentA,cs,391).
 taken(studentA,cs,385).
 taken(studentA,cs,343).
 taken(studentA,cs,341).
+taken(studentA,cs,399).
 
 /* This student, studentB, has taken a lot, but has not fulfilled the */
-/* BS in CS major requirements. */ 
+/* BS in CS major requirements. */
 taken(studentB,cs,111).
 taken(studentB,cs,112).
 taken(studentB,cs,221).
