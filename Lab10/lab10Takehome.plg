@@ -37,10 +37,59 @@ build(X,P) :- compose(X, Subtype), buildlist(Subtype,P).
 /* then append results (2nd statement) */
 /* if you run out of things to build, give back the empty list */
 buildlist([],[]).
-buildlist([H|T],Result) :- build(H,HeadComposition), buildlist(T,TailComposition), append(HeadComposition, TailComposition, Result).
+buildlist([H|T],Result) :- build(H, HeadComposition), buildlist(T,TailComposition), append(HeadComposition, TailComposition, Result).
 
 deriveASentence(X) :- build(sentence,X).
 
 printString(A) :- writef("%s", [A]).
 
 /* START YOUR SOLUTIONS HERE */
+
+insertSet(ATOM, [], [ATOM]).
+insertSet([], LIST_1, LIST_1).
+insertSet(ATOM, [HEAD | LIST_1], [HEAD | LIST_2]) :- ATOM == HEAD, insertSet([], [HEAD | LIST_1], [HEAD | LIST_2]).
+insertSet(ATOM, [HEAD | LIST_1], [HEAD | LIST_2]) :- ATOM \= HEAD, insertSet(ATOM, LIST_1, LIST_2).
+
+
+%% deleteSet(ATOM, [], []).
+%% deleteSet(ATOM, [ATOM | LIST_1], LIST_1).
+%% deleteSet(ATOM, [HEAD | LIST_1], [HEAD | LIST_2]) :- deleteSet(ATOM, LIST_1, LIST_2).
+deleteSet(ATOM, [], []).
+deleteSet(ATOM, [ATOM | TAIL], OUTPUT) :- deleteSet(ATOM, TAIL, TEMP), append([], TEMP, OUTPUT).
+deleteSet(ATOM, [HEAD | TAIL], OUTPUT) :- ATOM \= HEAD, deleteSet(ATOM, TAIL, TEMP), append([HEAD], TEMP, OUTPUT).
+
+
+%% count(ATOM, [], 0).
+%% count(ATOM, [HEAD | LIST], N) :- ATOM == Y, count(ATOM, LIST, M), N is M + 1.
+%% count(ATOM, [HEAD | LIST], N) :- count(ATOM, LIST, M), N is M.
+count(ATOM, [], 0).
+count(ATOM, [ATOM | TAIL], OUTPUT) :- count(ATOM, TAIL, TEMP), OUTPUT is TEMP + 1.
+count(ATOM, [HEAD | TAIL], OUTPUT) :- ATOM \= HEAD, count(ATOM, TAIL, OUTPUT).
+
+
+listSum([], 0).
+listSum([HEAD | TAIL], OUTPUT) :- listSum(TAIL, TEMP), OUTPUT is HEAD + TEMP.
+
+listSum2(LIST, OUTPUT) :- accumulator(LIST, 0, OUTPUT).
+accumulator([], ATOM, ATOM).
+accumulator([HEAD | TAIL], ATOM1, ATOM2) :- accumulator(TAIL, ATOM1, TEMP), ATOM2 is HEAD + TEMP.
+
+
+stringLessThan([], _).
+stringLessThan([ATOM1 | _], [ATOM2 | _]) :- ATOM2 > ATOM1.
+stringLessThan([ATOM1 | ATOM2], [ATOM3 | ATOM4]) :- ATOM1 = ATOM3, stringLessThan(ATOM2, ATOM4).
+
+strcat([], []).
+strcat([HEAD | TAIL], OUTPUT) :- strcat(TAIL, TEMP), append(HEAD, TEMP, OUTPUT).
+
+word(a).
+word(the).
+word(smelly).
+
+compose(determinant, [a]).
+compose(determinant, [the]).
+compose(adjective, [smelly]).
+compose(sentence, [noun_phrase, verb_phrase]).
+compose(noun_phrase, [determinant, noun]).
+compose(noun_phrase, [determinant, adjective, noun]).
+compose(verb_phrase, [verb, noun_phrase]).
