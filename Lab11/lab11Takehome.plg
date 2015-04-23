@@ -1,3 +1,13 @@
+/*
+*
+*
+* Author: Grant McGovern
+* Date: 23 April 2015
+*
+* ~ Introduction to Prolog: Lab 11 ~
+*
+*/
+
 /* Queue Code */
 /* ----------- */
 
@@ -62,3 +72,97 @@ insertSet(X,[H|T],Z) :- X \= H, insertSet(X,T,C), append([H],C,Z).
 count(_,[],0).
 count(X,[X|T],Z) :- count(X,T,C), Z is 1+C.
 count(X,[H|T],Z) :- X \= H, count(X,T,Z).
+
+/*********************************************************************************/
+
+/*
+*
+*	Take home problems.
+*
+*/
+
+/*********************************************************************************/
+
+/* #1 */
+/*********************************************************************************/
+stackempty([]).
+stackpeek([TOP | _ ], TOP).
+stackpop([TOP | BOTTOM], TOP, BOTTOM).
+stackpush(CUR, ITEM, RES) :- append([ITEM], CUR, RES).
+
+/* Evaluate helper method for the stack */
+evaluate('-', [ARG2, ARG1 | BOTTOM], RES) :- TOPUSH is ARG1 - ARG2, stackpush(
+																		BOTTOM, 
+																		TOPUSH, 
+																		RES).
+																		
+evaluate('+', [ARG2, ARG1 | BOTTOM], RES) :- TOPUSH is ARG1 + ARG2, stackpush(
+																		BOTTOM, 
+																		TOPUSH, 
+																		RES).
+
+evaluate('*', [ARG2, ARG1 | BOTTOM], RES) :- TOPUSH is ARG1 * ARG2, stackpush(
+																		BOTTOM, 
+																		TOPUSH, 
+																		RES).
+
+evaluate('/', [ARG2, ARG1 | BOTTOM], RES) :- TOPUSH is ARG1 / ARG2, stackpush(
+																		BOTTOM, 
+																		TOPUSH, 
+																		RES).
+
+/* #2 */
+/*********************************************************************************/
+postfix(LIST, Z) :- postFixHelper(LIST, [], Z).
+
+postFixHelper([], [X], X).
+postFixHelper(['+'| BOTTOM], CUR, OUTPUT) :- !, evaluate('+', CUR, RES), postFixHelper(
+																				BOTTOM, 
+																				RES, 
+																				OUTPUT).
+
+postFixHelper(['-'| BOTTOM], CUR, OUTPUT) :- !, evaluate('-', CUR, RES), postFixHelper(
+																				BOTTOM, 
+																				RES, 
+																				OUTPUT).
+
+postFixHelper(['/'| BOTTOM], CUR, OUTPUT) :- !, evaluate('/', CUR, RES), postFixHelper(
+																				BOTTOM, 
+																				RES, 
+																				OUTPUT).
+
+postFixHelper(['*'| BOTTOM], CUR, OUTPUT) :- !, evaluate('*', CUR, RES), postFixHelper(
+																				BOTTOM, 
+																				RES, 
+																				OUTPUT).
+
+postFixHelper([ITEM | BOTTOM], CUR, OUTPUT) :- stackpush(CUR, ITEM, RES), postFixHelper(
+																				BOTTOM, 
+																				RES, 
+																				OUTPUT).
+	
+/* #3 */
+/*********************************************************************************/
+insertionSort([], []).
+insertionSort([TOP | BOTTOM], CUR) :- insertionSort(BOTTOM, RES), insertionSortHelper(
+																			RES, 
+																			TOP, 
+																			CUR).
+
+insertionSortHelper([], ITEM, STACK) :- prependItem([], ITEM, STACK).
+insertionSortHelper([TOP | BOTTOM], ITEM, CUR) :- ITEM > TOP, prependItem([TOP | BOTTOM], ITEM, CUR).
+insertionSortHelper([TOP | BOTTOM], ITEM, CUR) :- ITEM =< TOP, insertionSortHelper(BOTTOM, ITEM, RES), prependItem(
+																												RES, 
+																												TOP, 
+																												CUR).
+
+/* #4 */
+/*********************************************************************************/
+insertSet2(TOP, [], [TOP]).
+insertSet2(TOP, [TOP | BOTTOM], [TOP | BOTTOM]) :- !.
+insertSet2(ITEM, [TOP | BOTTOM], Z) :- insertSet2(ITEM, BOTTOM, TEMP), append([TOP], TEMP, Z).
+
+count2([], [], 0).
+count2(ATOM, [], 0).
+count2(ITEM, [ITEM | BOTTOM], Z) :- count2(ITEM, BOTTOM, TEMP), !, Z is 1 + TEMP.
+count2(ITEM, [TOP | BOTTOM], Z) :- count2(ITEM, BOTTOM, Z).
