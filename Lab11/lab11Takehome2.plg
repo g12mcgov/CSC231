@@ -1,0 +1,118 @@
+/* Queue Code */
+/* ----------- */
+
+/* A queue is empty if it is an empty list */
+queueEmpty([]).
+
+/* Adding an item to the queue adds the Item to the back of the list */
+queueAdd(Queue,Item,NewQueue) :- append(Queue,[Item],NewQueue).
+
+/* Removing an item from the queue grabs the head component and marks the output queue as the tail */
+/* of the original queue */
+queueRemove([FrontQueue|RestQueue],FrontQueue,RestQueue).
+
+/* Peeking into the queue gives you the head of the queue */
+queuePeek([FrontQueue|_],FrontQueue).
+
+/* An auxillary function to put an item onto the front of a list -- useful for Stack? */
+prependItem(List, Item, NewList) :- append([Item],List,NewList).
+
+
+
+/* Selection Sort Code */
+/* The largest of a one item list is that one item */
+largest([H],H).
+
+/* Compare the first two items of a list and drop the smaller, the largest of the remaining is the largest*/
+largest([H|[X|Y]],S) :- H >= X, largest([H|Y],S).
+
+/* Compare the first two items of a list and drop the smaller, the largest of the remaining is the largest*/
+largest([H|[X|Y]],S) :- H < X, largest([X|Y],S).
+
+/* Removing an item from an empty list gives you an empty list */
+remove(_,[],[]).
+
+/* Removing an item from the head gives you the tail */
+remove(H,[H|T],T).
+
+/* Removing an item that isn't the head of the list results in the head prepended with the tail, where the tail */
+/* has had the item removed. */
+remove(S,[H|T],Result) :- S \= H, remove(S,T,TempResult), append([H],TempResult,Result).
+
+/* Sorting an empty list returns an empty list */
+selectionSort([],[]).
+
+/* Sorting a list with at least one item involves: finding the largest item, removing it from the list, sorting */
+/* the rest of the list recursively, and then sticking the largest item on the front of the sorted_rest */
+selectionSort([H|Tail],Result) :- largest([H|Tail],RealLargest), remove(RealLargest,[H|Tail], UpdatedTail), selectionSort(UpdatedTail,TempResult),append([RealLargest],TempResult,Result).
+
+/* Examples of the Cut Operator */
+sum_to(1,1) :- !.
+sum_to(X,Y) :- X1 is X-1,sum_to(X1,Y1), Y is Y1 + X.
+
+
+/* code for you to update with the Cut Operator and to trace */
+insertSet(H,[],[H]).
+insertSet(H,[H|T],[H|T]).
+insertSet(X,[H|T],Z) :- X \= H, insertSet(X,T,C), append([H],C,Z).
+
+count(_,[],0).
+count(X,[X|T],Z) :- count(X,T,C), Z is 1+C.
+count(X,[H|T],Z) :- X \= H, count(X,T,Z).
+
+
+/**PROBLEMS**/
+
+/**1**/
+
+stackEmpty([]).
+
+stackPush(CurrentStack,ItemPush,ResultingStack) :- append([ItemPush],CurrentStack,ResultingStack).
+
+stackPop([HeadCurrentStack|TailCurrentStack],HeadCurrentStack,TailCurrentStack).
+
+stackPeek([HeadCurrentStack|_],HeadCurrentStack).
+
+/**2**/
+
+stackEval('+',[OP2,OP1|Tail], ResultingStack) :-  ANS is OP1+OP2, stackPush(Tail,ANS,ResultingStack).
+
+stackEval('-',[OP2,OP1|Tail], ResultingStack) :-  ANS is OP1-OP2, stackPush(Tail,ANS,ResultingStack).
+
+stackEval('*',[OP2,OP1|Tail], ResultingStack) :-  ANS is OP1*OP2, stackPush(Tail,ANS,ResultingStack).
+
+stackEval('/',[OP2,OP1|Tail], ResultingStack) :-  ANS is OP1/OP2, stackPush(Tail,ANS,ResultingStack).
+
+postfix(L,Z) :- postfixer(L,[],Z).
+
+postfixer([],[X],X).
+
+postfixer(['+'|Tail],CurrStack,A) :- !, stackEval('+',CurrStack,ResultingStack), postfixer(Tail,ResultingStack,A).
+
+postfixer(['-'|Tail],CurrStack,A) :- !, stackEval('-',CurrStack,ResultingStack), postfixer(Tail,ResultingStack,A).
+
+postfixer(['*'|Tail],CurrStack,A) :- !, stackEval('*',CurrStack,ResultingStack), postfixer(Tail,ResultingStack,A).
+
+postfixer(['/'|Tail],CurrStack,A) :- !, stackEval('/',CurrStack,ResultingStack), postfixer(Tail,ResultingStack,A).
+
+postfixer([X|Tail],CStack,A) :- stackPush(CStack,X,ResultingStack), postfixer(Tail,ResultingStack,A).
+
+/**3**/
+
+insertionSort([],[]).
+insertionSort([Head|Tail],CurrStack):- insertionSort(Tail,ResultingStack), sorter(ResultingStack,Head,CurrStack).
+
+sorter([],X,NS):- prependItem([],X,NS).
+
+sorter([Head|Tail],X,CurrStack):- X > Head, prependItem([Head|Tail],X,CurrStack).
+sorter([Head|Tail],X,CurrStack):- X =< Head, sorter(Tail,X,ResultingStack), prependItem(ResultingStack,Head,CurrStack).
+
+/**4**/
+
+insertSet2(H,[],[H]).
+insertSet2(H,[H|T],[H|T]):-!.
+insertSet2(X,[H|T],Z) :- insertSet2(X,T,C), append([H],C,Z).
+
+count2(_,[],0).
+count2(X,[X|T],Z) :- count2(X,T,C),!, Z is 1+C.
+count2(X,[H|T],Z) :- count2(X,T,Z).
